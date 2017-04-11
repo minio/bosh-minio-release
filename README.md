@@ -1,41 +1,25 @@
 # BOSH Minio Release
 
-A BOSH release of Minio Object Storage Server. For more information
-about Minio visit the repo [here](https://github.com/minio/minio).
+[BOSH](http://bosh.io/) allows users to easily version, package and deploy software in a reproducible manner. This repo provides BOSH release of [Minio](https://github.com/minio/minio) Object Storage Server. You can use this release to deploy Minio in standalone, single-node mode as well as in distributed mode on multiple nodes.
 
-This release can be used to deploy Minio in standalone, single-node
-mode as well as in distributed mode on multiple nodes.
+To get started from scratch, you can Follow below steps to get started with the BOSH Minio release locally using `bosh-lite`. If you already have a BOSH installation available, you can jump straight to the [Create and upload BOSH release section](#create).
 
-# How to try out this release
+## Install `bosh-lite` and `bosh_cli`
 
-The following describes trying out the release on your local system
-using BOSH Lite.
+- bosh-lite installation [instructions](https://github.com/cloudfoundry/bosh-lite/blob/master/README.md). 
+- bosh_cli installation [instructions](http://bosh.io/docs/bosh-cli.html).
 
-## Install Bosh CLI and BOSH Lite
+## Upload stemcell to BOSH
 
-Install bosh-lite and bosh_cli as
-described [here](https://github.com/cloudfoundry/bosh-lite).
-
-After setting up the VM with bosh-lite, run the `bin/add-route` script
-to add routes to access your VMs. The script is present in the
-bosh-lite repo.
-
-## Clone and cd into this repo
-
-## Download and upload stemcell to BOSH
-
-The BOSH-lite Warden stemcell is used here and is
-available
+Stemcell is a versioned Operating System image wrapped with IaaS specific packaging. You'll need to provide the bosh-lite Warden stemcell. You can download it from 
 [here](https://s3.amazonaws.com/bosh-core-stemcells/warden/bosh-stemcell-3363.12-warden-boshlite-ubuntu-trusty-go_agent.tgz).
 
-After downloading it, use a command like below to upload it to your
-VM:
+Once downloaded, use the below command to upload it to your VM:
 
 ``` shell
 bosh upload stemcell ~/Downloads/bosh-stemcell-3363.12-warden-boshlite-ubuntu-trusty-go_agent.tgz --skip-if-exists
-
 ```
-
+<a name="create"></a>
 ## Create and upload the BOSH release
 
 ``` shell
@@ -46,7 +30,7 @@ bosh upload release
 
 ## Create manifest from examples files in `manifests`
 
-Copy a manifest in the `manifests/` directory and replace the
+Copy a manifest from the [`manifests/`](https://github.com/minio/minio-boshrelease/tree/master/manifests) directory and replace the
 `director_uuid` field with the one from your BOSH director.
 
 The UUID to put in the manifest can be found with:
@@ -57,8 +41,9 @@ bosh status
 
 ## Deploy
 
-Set the deployment manifest by providing the name of your manifest,
-for example:
+### Standalone Minio deployment
+
+Set the deployment manifest by providing the name of your manifest, for example:
 
 ``` shell
 bosh deployment manifest/manifest-fs.yml
@@ -70,12 +55,11 @@ Then run the deploy command:
 bosh deploy
 ```
 
-With the settings in the example manifest, you should be able to
-access the minio server at `http://10.244.0.2:9001`, with the mc
-tool:
+With the default settings (in [example manifest](https://github.com/minio/minio-boshrelease/blob/master/manifests/manifest-fs.yml)), you should be able to access the minio server at `http://10.244.0.2:9001`. 
+
+Test with the [mc](https://github.com/minio/mc) tool:
 
 ``` shell
-
 ###### Using settings in the example manifest ######
 mc config host add boshminio http://10.244.0.2:9001 minio minio123
 # Test it out:
@@ -84,13 +68,12 @@ mc mb boshminio/bucket
 mc cp /etc/issue boshminio/bucket/
 ```
 
-For deploying a distributed version, just set the number of desired
-instances in the manifest file along with that many `static_ips` in
-the `jobs` section of the manifest, as shown in the example manifest
-at `manifests/manifest-dist-4node.yml`.
+### Distributed Minio deployment
 
-With the settings in that example manifest, you can test the
-deployment with mc as follows:
+For deploying a distributed version, set the number of desired instances in the manifest file along with that many `static_ips` in
+the `jobs` section of the manifest, as shown in the [example manifest](https://github.com/minio/minio-boshrelease/blob/master/manifests/manifest-dist-4node.yml).
+
+With the default settings (in [example manifest](https://github.com/minio/minio-boshrelease/blob/master/manifests/manifest-dist-4node.yml)), you can test the deployment with mc as follows:
 
 ``` shell
 mc config host add boshminio1 http://10.244.0.2:9001 minio minio123
