@@ -2,7 +2,7 @@
 
 [BOSH](http://bosh.io/) allows users to easily version, package and deploy software in a reproducible manner. This repo provides BOSH release of [Minio](https://github.com/minio/minio) Object Storage Server. You can use this release to deploy Minio in standalone, single-node mode as well as in distributed mode on multiple nodes.
 
-To get started from scratch, you can Follow below steps to get started with the BOSH Minio release locally using `bosh-lite`. If you already have a BOSH installation available, you can jump straight to the [Create and upload BOSH release section](#create).
+To get started from scratch with the BOSH Minio release locally, you can follow the steps below starting with installing `bosh-lite`. If you already have a BOSH installation available, you can jump straight to the [Create and upload BOSH release section](#create).
 
 ## Install `bosh-lite` and `bosh_cli`
 
@@ -14,7 +14,7 @@ To get started from scratch, you can Follow below steps to get started with the 
 Stemcell is a versioned Operating System image wrapped with IaaS specific packaging. You'll need to provide the bosh-lite Warden stemcell. You can download it from 
 [here](https://s3.amazonaws.com/bosh-core-stemcells/warden/bosh-stemcell-3363.12-warden-boshlite-ubuntu-trusty-go_agent.tgz).
 
-Once downloaded, use the below command to upload it to your VM:
+Once downloaded, use the command below to upload it to your VM:
 
 ``` shell
 bosh upload stemcell ~/Downloads/bosh-stemcell-3363.12-warden-boshlite-ubuntu-trusty-go_agent.tgz --skip-if-exists
