@@ -1,54 +1,39 @@
 ---
-name: minio-singlenode-deploy
-director_uuid: 63ddb6a6-d6fe-40e1-b16b-2ff6b2034c79
+name: minio
+director_uuid: UUID
 
 releases:
 - name: minio
   version: latest
 
-networks:
-- name: default
-  subnets:
-  - range: 10.244.0.0/28
-    reserved: [10.244.0.1]
-    static: [10.244.0.2,10.244.0.3,10.244.0.4,10.244.0.5]
-    cloud_properties:
-      name: random
+stemcells:
+- alias: default
+  os: ubuntu-trusty
+  version: 'latest'
 
-resource_pools:
-- name: default
-  stemcell:
-    name: bosh-warden-boshlite-ubuntu-trusty-go_agent
-    version: latest
-  network: default
-  cloud_properties: {}
-
-compilation:
-  workers: 2
-  network: default
-  cloud_properties: {}
+instance_groups:
+- name: minio
+  azs: [z1]
+  instances: 1
+  jobs:
+  - name: minio-server
+    release: minio
+    templates:
+    - name: minio-server
+    properties:
+      credential:
+        accesskey: minio
+        secretkey: minio123
+        port: 9000
+  networks:
+  - name: default
+  vm_type: default
+  persistent_disk_type: 2048
+  stemcell: default
 
 update:
   canaries: 1
-  canary_watch_time: 30000
-  update_watch_time: 30000
-  max_in_flight: 4
-  serial: false
+  canary_watch_time: 1000-30000
+  update_watch_time: 1000-30000
+  max_in_flight: 10
 
-jobs:
-- name: minio-server
-  templates:
-  - name: minio-server
-  instances: 1
-  resource_pool: default
-  persistent_disk: 10000
-  networks:
-  - name: default
-    static_ips:
-    - 10.244.0.2
-  properties:
-    credential:
-      accesskey: minio
-      secretkey: minio123
-    region: us-east-1
-    port: 9001
