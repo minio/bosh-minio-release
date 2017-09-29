@@ -1,0 +1,5 @@
+check process minio-gcs
+  with pidfile /var/vcap/sys/run/minio-gcs/pid
+  start program "/var/vcap/jobs/minio-gcs/bin/ctl start"
+  stop program "/var/vcap/jobs/minio-gcs/bin/ctl stop"
+  group vcap

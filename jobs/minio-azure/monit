@@ -1,0 +1,5 @@
+check process minio-azure
+  with pidfile /var/vcap/sys/run/minio-azure/pid
+  start program "/var/vcap/jobs/minio-azure/bin/ctl start"
+  stop program "/var/vcap/jobs/minio-azure/bin/ctl stop"
+  group vcap
