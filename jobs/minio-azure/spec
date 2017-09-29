@@ -1,0 +1,31 @@
+---
+name: minio-azure
+templates:
+  ctl.erb: bin/ctl
+
+packages:
+- minio
+
+consumes:
+- name: minio-azure
+  type: server
+
+provides:
+- name: minio-azure
+  type: server
+  properties:
+  - port
+
+properties:
+  credential.accesskey:
+    description: "The access key the server should accept"
+    default: ~
+  credential.secretkey:
+    description: "The secret key the server should accept"
+    default: ~
+  region:
+    description: "The region the server should claim to be part of.  Defaults to us-east-1."
+    default: us-east-1
+  port:
+    description: "The port on which the Minio server should bind"
+    default: 9000

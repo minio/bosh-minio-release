@@ -1,0 +1,34 @@
+#!/bin/bash
+
+RUN_DIR=/var/vcap/sys/run/minio-azure
+LOG_DIR=/var/vcap/sys/log/minio-azure
+CONFIG_DIR=/var/vcap/jobs/minio-azure/config
+STORE_DIR=/var/vcap/store/minio-azure
+PIDFILE=${RUN_DIR}/pid
+BINPATH=/var/vcap/packages/minio
+
+mkdir -p ${RUN_DIR} ${LOG_DIR} ${CONFIG_DIR} ${STORE_DIR}
+chown -R vcap:vcap $RUN_DIR $LOG_DIR $CONFIG_DIR ${STORE_DIR}
+
+export MINIO_ACCESS_KEY="<%= p("credential.accesskey") %>"
+export MINIO_SECRET_KEY="<%= p("credential.secretkey") %>"
+
+case $1 in
+
+  start)
+    echo $$ > $PIDFILE
+    exec ${BINPATH}/minio gateway --address ':<%= p("port") %>' azure \
+         >> ${LOG_DIR}/minio-server.stdout.log \
+         2>> ${LOG_DIR}/minio-server.stderr.log
+    ;;
+
+  stop)
+    kill -9 `cat $PIDFILE`
+    rm -f $PIDFILE
+
+    ;;
+
+  *)
+    echo "Usage: ctl {start|stop}" ;;
+
+esac

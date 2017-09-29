@@ -1,0 +1,37 @@
+---
+name: minio-gcs
+templates:
+  ctl.erb: bin/ctl
+
+packages:
+- minio
+
+consumes:
+- name: minio-gcs
+  type: server
+
+provides:
+- name: minio-gcs
+  type: server
+  properties:
+  - port
+
+properties:
+  credential.accesskey:
+    description: "The access key the server should accept"
+    default: ~
+  credential.secretkey:
+    description: "The secret key the server should accept"
+    default: ~
+  credential.googlecredentials:
+    description: Google credentials JSON
+    default: ""
+  credential.googleprojectid:
+    description: Google Project ID
+    default: ""
+  region:
+    description: "The region the server should claim to be part of.  Defaults to us-east-1."
+    default: us-east-1
+  port:
+    description: "The port on which the Minio server should bind"
+    default: 9000
