@@ -1,0 +1,19 @@
+name: minio
+version: 2017-09-29T19-16-56Z
+commit_hash: 3c0ed3c
+uncommitted_changes: true
+jobs:
+- name: minio-server
+  version: e9574614164741d125dca66c28b4a5d5a9478b35
+  fingerprint: e9574614164741d125dca66c28b4a5d5a9478b35
+  sha1: 43bc1e07a24729eec7491611ebe655ffd9b837d5
+packages:
+- name: minio
+  version: 7c66b7dcd03e41886580074fd10fd1df9149465a
+  fingerprint: 7c66b7dcd03e41886580074fd10fd1df9149465a
+  sha1: 7c5cb1151fb53ec1594878b900bee80191f298dc
+  dependencies: []
+license:
+  version: e6c4ccc65c76e75e2338d1edabdcf264d37ee663
+  fingerprint: e6c4ccc65c76e75e2338d1edabdcf264d37ee663
+  sha1: b2ab9dce5cbd539d92c8c402492a0470a89897a7

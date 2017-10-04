@@ -1,4 +1,0 @@
-set -e
-
-cp -a minio.RELEASE.2017-08-05T00-00-53Z/minio ${BOSH_INSTALL_TARGET}
-chmod +x ${BOSH_INSTALL_TARGET}/minio

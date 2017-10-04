@@ -6,7 +6,7 @@ CONFIG_DIR=/var/vcap/jobs/minio-server/config
 STORE_DIR=/var/vcap/store/minio-server
 PIDFILE=${RUN_DIR}/pid
 # If minio package is updated, this line needs to be updated as well.
-BINPATH=/var/vcap/packages/minio.RELEASE.2017-08-05T00-00-53Z
+BINPATH=/var/vcap/packages/minio
 
 mkdir -p ${RUN_DIR} ${LOG_DIR} ${CONFIG_DIR} ${STORE_DIR}
 chown -R vcap:vcap $RUN_DIR $LOG_DIR $CONFIG_DIR ${STORE_DIR}

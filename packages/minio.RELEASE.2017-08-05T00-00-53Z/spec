@@ -1,7 +1,0 @@
----
-name: minio.RELEASE.2017-08-05T00-00-53Z
-
-dependencies: []
-
-files:
-- minio.RELEASE.2017-08-05T00-00-53Z/minio # From https://dl.minio.io/server/minio/release/linux-amd64/
