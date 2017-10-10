@@ -1,5 +1,5 @@
 ---
-name: minio-server
+name: minio-gcs
 templates:
   ctl.erb: bin/ctl
   health_check.erb: bin/health_check
@@ -9,11 +9,11 @@ packages:
 - minio
 
 consumes:
-- name: minio-server
+- name: minio-gcs
   type: server
 
 provides:
-- name: minio-server
+- name: minio-gcs
   type: server
   properties:
   - port
@@ -25,6 +25,12 @@ properties:
   credential.secretkey:
     description: "The secret key the server should accept"
     default: ~
+  credential.googlecredentials:
+    description: Google credentials JSON
+    default: ""
+  credential.googleprojectid:
+    description: Google Project ID
+    default: ""
   region:
     description: "The region the server should claim to be part of.  Defaults to us-east-1."
     default: us-east-1
