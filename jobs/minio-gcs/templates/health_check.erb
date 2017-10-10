@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Exit value of this command indicates if the server is running.
+curl http://localhost:<%= p("port") %> > /dev/null 2>&1
