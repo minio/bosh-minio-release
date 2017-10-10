@@ -6,7 +6,7 @@
 Upload minio release to the bosh director.
 
 ```
-bosh upload-release https://github.com/minio/minio-boshrelease/releases/download/RELEASE.2017-08-05T00-00-53Z/minio.tgz
+bosh upload-release https://bosh.io/d/github.com/minio/minio-boshrelease
 ```
 
 ## Deploy
