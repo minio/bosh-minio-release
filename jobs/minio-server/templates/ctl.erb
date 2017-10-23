@@ -2,14 +2,15 @@
 
 RUN_DIR=/var/vcap/sys/run/minio-server
 LOG_DIR=/var/vcap/sys/log/minio-server
-CONFIG_DIR=/var/vcap/jobs/minio-server/config
-STORE_DIR=/var/vcap/store/minio-server
+STORE_DIR=/var/vcap/store
+CONFIG_DIR=${STORE_DIR}/minio-config
+DATA_DIR=${STORE_DIR}/minio-server
 PIDFILE=${RUN_DIR}/pid
 # If minio package is updated, this line needs to be updated as well.
 BINPATH=/var/vcap/packages/minio
 
-mkdir -p ${RUN_DIR} ${LOG_DIR} ${CONFIG_DIR} ${STORE_DIR}
-chown -R vcap:vcap $RUN_DIR $LOG_DIR $CONFIG_DIR ${STORE_DIR}
+mkdir -p ${RUN_DIR} ${LOG_DIR} ${CONFIG_DIR} ${DATA_DIR}
+chown -R vcap:vcap $RUN_DIR $LOG_DIR $CONFIG_DIR ${DATA_DIR}
 
 case $1 in
 
@@ -18,7 +19,7 @@ case $1 in
 
     exec ${BINPATH}/minio server -C $CONFIG_DIR \
          --address ':<%= p("port") %>' \
-         <% if link("minio-server").instances.length > 1 %><% link("minio-server").instances.map { |instance| %> "http://<%= instance.address %>${STORE_DIR}/" <% } %><% else %>${STORE_DIR}/<% end %> \
+         <% if link("minio-server").instances.length > 1 %><% link("minio-server").instances.map { |instance| %> "http://<%= instance.address %>${DATA_DIR}/" <% } %><% else %>${DATA_DIR}/<% end %> \
          >> ${LOG_DIR}/minio-server.stdout.log \
          2>> ${LOG_DIR}/minio-server.stderr.log
 
