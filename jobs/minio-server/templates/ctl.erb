@@ -16,6 +16,8 @@ if [ ! -f ${CONFIG_DIR}/config.json ]; then
     cp /var/vcap/jobs/minio-server/config/config.json ${CONFIG_DIR}/config.json
 fi
 
+export MINIO_PCF_TILE_VERSION=<%= p("pcf_tile_version") %>
+
 case $1 in
 
   start)
