@@ -24,14 +24,13 @@ b7707b11c64e04be87b4cf723cca5e776b7ed3737c0d6b16b8a3d72c8b183135 minio.RELEASE.2
 ### Update blob for new package
 
 ``` shell
-bosh2 add-blob /tmp/minio minio
+bosh2 add-blob --sha2 /tmp/minio minio
 ```
 
 Create the final release and upload blobs. Example commands:
 
 ``` shell
-bosh2 create-release --version=2017-09-29T19-16-56Z --final --force
-bosh2 upload-blobs # This requires you to configure s3 creds in config/private.yml
+bosh2 create-release --sha2 --version=2017-09-29T19-16-56Z --final --force
 ```
 
 Commit the files generated to Git:
