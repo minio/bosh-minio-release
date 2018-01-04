@@ -35,6 +35,7 @@ bosh2 create-release --sha2 --version=2017-09-29T19-16-56Z --final --force
 
 Commit the files generated to Git:
 ```
+git add .final_builds/packages/minio/index.yml
 git add config/blobs.yml
 git add releases/minio/index.yml
 git add releases/minio/minio-2017-09-29T19-16-56Z.yml
