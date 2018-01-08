@@ -1,6 +1,5 @@
 ---
 name: minio
-director_uuid: UUID
 
 releases:
 - name: minio
