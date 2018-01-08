@@ -1,6 +1,5 @@
 ---
 name: minio
-director_uuid: UUID
 
 releases:
 - name: minio
@@ -24,7 +23,7 @@ instance_groups:
       credential:
         accesskey: minio
         secretkey: minio123
-        port: 9000
+      port: 9000
   networks:
   - name: default
   vm_type: default
