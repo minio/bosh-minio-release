@@ -14,7 +14,7 @@ bosh upload-release https://bosh.io/d/github.com/minio/minio-boshrelease
 ### Standalone Minio deployment
 
 ``` shell
-bosh deploy -d minio manifest/manifest-fs.yml
+bosh deploy -d minio manifest/manifest-fs-example.yml
 ```
 
 ### Distributed Minio deployment
@@ -22,5 +22,5 @@ bosh deploy -d minio manifest/manifest-fs.yml
 For deploying a distributed version, set the number of desired instances in the manifest file.
 
 ``` shell
-bosh deploy -d minio manifest/manifest-dist-4node.yml
+bosh deploy -d minio manifest/manifest-dist-example.yml
 ```
