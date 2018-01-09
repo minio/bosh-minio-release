@@ -18,9 +18,9 @@ instance_groups:
   - name: minio-server
     release: minio
     consumes:
-      minio: {from: minio-cluster}
+      minio-server: {from: minio-cluster}
     provides:
-      minio: {as: minio-cluster}
+      minio-server: {as: minio-cluster}
     properties:
       credential:
         accesskey: minio
