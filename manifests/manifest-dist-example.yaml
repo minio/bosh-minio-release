@@ -8,7 +8,7 @@ releases:
 stemcells:
 - alias: default
   os: ubuntu-trusty
-  version: 'latest'
+  version: latest
 
 instance_groups:
 - name: minio
@@ -17,8 +17,10 @@ instance_groups:
   jobs:
   - name: minio-server
     release: minio
-    templates:
-    - name: minio-server
+    consumes:
+      minio: {from: minio-cluster}
+    provides:
+      minio: {as: minio-cluster}
     properties:
       credential:
         accesskey: minio

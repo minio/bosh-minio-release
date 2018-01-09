@@ -8,7 +8,7 @@ releases:
 stemcells:
 - alias: default
   os: ubuntu-trusty
-  version: 'latest'
+  version: latest
 
 instance_groups:
 - name: minio
