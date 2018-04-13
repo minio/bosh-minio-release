@@ -32,7 +32,7 @@ case $1 in
     ;;
 
   stop)
-    kill -9 `cat $PIDFILE`
+    kill $(<$PIDFILE)
     rm -f $PIDFILE
 
     ;;
