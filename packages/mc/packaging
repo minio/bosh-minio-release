@@ -1,0 +1,4 @@
+set -e
+
+cp -a mc ${BOSH_INSTALL_TARGET}
+chmod +x ${BOSH_INSTALL_TARGET}/mc

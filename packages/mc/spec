@@ -1,0 +1,7 @@
+---
+name: mc
+
+dependencies: []
+
+files:
+- mc # From https://dl.minio.io/client/mc/release/linux-amd64/mc

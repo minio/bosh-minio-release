@@ -30,6 +30,49 @@ instance_groups:
   persistent_disk_type: 2048
   stemcell: default
 
+- name: tests
+  azs: [z1]
+  instances: 1
+  lifecycle: errand
+  post_deploy: true
+  jobs:
+  - name: smoke-tests
+    release: minio
+    templates:
+    - name: smoke-tests
+    consumes:
+      minio: {from: minio-link}
+  networks:
+  - name: default
+  vm_type: default
+  persistent_disk_type: 2048
+  stemcell: default
+
+- name: bucket-seeding # To create default buckets after manifest-deploy
+  azs: [z1]
+  instances: 1
+  lifecycle: errand
+  post_deploy: true
+  jobs:
+  - name: mc
+    release: minio
+    templates:
+    - name: mc
+    consumes:
+      minio: {from: minio-link}
+    properties:
+      script: |
+        #!/bin/sh
+        mc mb myminio/bucket1
+        mc mb myminio/bucket2
+        mc mb myminio/bucket3
+        mc mb myminio/bucket3
+  networks:
+  - name: default
+  vm_type: default
+  persistent_disk_type: 2048
+  stemcell: default
+
 update:
   canaries: 1
   canary_watch_time: 1000-30000

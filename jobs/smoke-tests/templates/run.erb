@@ -1,0 +1,57 @@
+#!/bin/bash
+
+MC=/var/vcap/packages/mc/mc
+
+ACCESS_KEY="<%= link('minio').p('credential.accesskey') %>"
+SECRET_KEY="<%= link('minio').p('credential.secretkey') %>"
+PORT="<%= link('minio').p('port') %>"
+HOST="<%= link('minio').instances[0].address %>"
+export MC_HOSTS_myminio=http://$ACCESS_KEY:$SECRET_KEY@$HOST:$PORT
+
+# MakeBucket
+$MC mb myminio/test
+if [ $? -ne 0 ]
+then
+    exit $?
+fi
+
+# PUT Object
+$MC cp /etc/passwd myminio/test
+if [ $? -ne 0 ]
+then
+    exit $?
+fi
+
+# GET Object
+uploadedFile=`$MC cat myminio/test/passwd`
+if [ $? -ne 0 ]
+then
+    exit $?
+fi
+
+localFile=`cat /etc/passwd`
+if [ $? -ne 0 ]
+then
+    exit $?
+fi
+
+if [ "$uploadedFile" != "$localFile" ]
+then
+    exit 1
+fi
+
+# Remove Object
+$MC rm --force myminio/test/passwd
+if [ $? -ne 0 ]
+then
+    exit $?
+fi
+
+# Remove Bucket
+$MC rm --force myminio/test
+if [ $? -ne 0 ]
+then
+    exit $?
+fi
+
+exit 0

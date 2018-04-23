@@ -1,0 +1,16 @@
+---
+name: mc
+
+templates:
+  run.erb: bin/run
+
+consumes:
+- name: minio
+  type: server
+
+packages:
+- mc
+
+properties:
+  script:
+    description: bash script to run mc commands

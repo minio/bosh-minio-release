@@ -17,6 +17,8 @@ provides:
   type: server
   properties:
   - port
+  - credential.accesskey
+  - credential.secretkey
 
 properties:
   credential.accesskey:
