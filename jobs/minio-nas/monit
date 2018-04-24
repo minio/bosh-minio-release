@@ -1,0 +1,5 @@
+check process minio-nas
+  with pidfile /var/vcap/sys/run/minio-nas/pid
+  start program "/var/vcap/jobs/minio-nas/bin/ctl start"
+  stop program "/var/vcap/jobs/minio-nas/bin/ctl stop"
+  group vcap

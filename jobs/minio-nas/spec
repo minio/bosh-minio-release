@@ -1,0 +1,37 @@
+---
+name: minio-nas
+templates:
+  ctl.erb: bin/ctl
+  health_check.erb: bin/health_check
+
+packages:
+- minio
+
+consumes:
+- name: minio-nas
+  type: server
+
+provides:
+- name: minio-nas
+  type: server
+  properties:
+  - port
+
+properties:
+  credential.accesskey:
+    description: "The access key the server should accept"
+    default: ~
+  credential.secretkey:
+    description: "The secret key the server should accept"
+    default: ~
+  nas_data_dir:
+    description: "The directory where the nas share is mounted."
+  region:
+    description: "The region the server should claim to be part of.  Defaults to us-east-1."
+    default: us-east-1
+  port:
+    description: "The port on which the Minio server should bind"
+    default: 9000
+  pcf_tile_version:
+    description: "PCF Tile version"
+    default: ""

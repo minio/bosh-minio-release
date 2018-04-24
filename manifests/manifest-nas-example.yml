@@ -1,0 +1,46 @@
+---
+name: minio
+
+releases:
+- name: minio
+  version: latest
+- name: capi
+  version: latest
+
+stemcells:
+- alias: default
+  os: ubuntu-trusty
+  version: latest
+
+instance_groups:
+- name: minio
+  azs: [z1]
+  instances: 1
+  jobs:
+  - name: nfs_mounter
+    release: capi
+    properties:
+      nfs_server:
+        address: nfs_server
+        share: /minio
+  - name: minio-nas
+    release: minio
+    templates:
+    - name: minio-nas
+    properties:
+      credential:
+        accesskey: minio
+        secretkey: minio123
+      nas_data_dir: /var/vcap/nfs
+      port: 9000
+  networks:
+  - name: default
+  vm_type: default
+  stemcell: default
+
+update:
+  canaries: 1
+  canary_watch_time: 1000-30000
+  update_watch_time: 1000-30000
+  max_in_flight: 1
+

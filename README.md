@@ -24,3 +24,10 @@ For deploying a distributed version, set the number of desired instances in the 
 ``` shell
 bosh deploy -d minio manifest/manifest-dist-example.yml
 ```
+### NAS Minio deployment
+
+For deploying a minio backed by a NAS mounted directory.  In this example using NFS with the nfs_mounter job from the capi release.
+
+``` shell
+bosh deploy -d minio manifest/manifest-nas-example.yml
+```
