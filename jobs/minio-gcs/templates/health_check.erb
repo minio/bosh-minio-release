@@ -14,9 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-http_response=$(curl -H "User-Agent: Mozilla" -s -k -o /dev/null -I -w "%{http_code}" http://localhost:<%= p("port") %>/minio/index.html)
+http_response=$(curl -s -k -o /dev/null -I -w "%{http_code}" http://localhost:<%= p("port") %>/minio/health/live)
 
-# if the server is up it would return:
-# 200 - if minio-browser is enabled
-# 404 - if minio-browser is disabled
-[ "$http_response" = "200" ] || [ "$http_response" = "404" ]
+[ "$http_response" = "200" ]
