@@ -1,0 +1,47 @@
+#!/bin/bash
+
+RUN_DIR=/var/vcap/sys/run/minio-nas
+LOG_DIR=/var/vcap/sys/log/minio-nas
+PIDFILE=${RUN_DIR}/pid
+BINPATH=/var/vcap/packages/minio
+
+mkdir -p ${RUN_DIR} ${LOG_DIR}
+chown -R vcap:vcap $RUN_DIR $LOG_DIR
+
+export MINIO_ACCESS_KEY="<%= p("credential.accesskey") %>"
+export MINIO_SECRET_KEY="<%= p("credential.secretkey") %>"
+export MINIO_PCF_TILE_VERSION=<%= p("pcf_tile_version") %>
+
+case $1 in
+
+  start)
+
+    echo "Checking to see if nas_data_dir is mounted." >> ${LOG_DIR}/minio-server.stdout.log
+    nas_check_attempts=0
+    while [ "$(stat --format='%d%D' /)" = "$(stat --format='%d%D' <%= p("nas_data_dir") %>)" ]; do
+      sleep 1
+      nas_check_attempts=$((nas_check_attempts+1))
+      echo "Failed to find NAS mount $nas_check_attempts times." >> ${LOG_DIR}/minio-server.stderr.log
+      if [ $nas_check_attempts = "20" ]; then
+        echo "Timed out waiting for NAS mount to become available." >> ${LOG_DIR}/minio-server.stderr.log
+        exit 1
+      fi
+    done
+    echo "NAS share mounted! Starting Minio." >> ${LOG_DIR}/minio-server.stdout.log
+
+    echo $$ > $PIDFILE
+    exec ${BINPATH}/minio gateway nas <%= p("nas_data_dir") %> \
+         >> ${LOG_DIR}/minio-server.stdout.log \
+         2>> ${LOG_DIR}/minio-server.stderr.log
+    ;;
+
+  stop)
+    kill -9 `cat $PIDFILE`
+    rm -f $PIDFILE
+
+    ;;
+
+  *)
+    echo "Usage: ctl {start|stop}" ;;
+
+esac
