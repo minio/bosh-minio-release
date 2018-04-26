@@ -21,7 +21,7 @@ instance_groups:
     release: capi
     properties:
       nfs_server:
-        address: nfs_server
+        address: nfs_server_hostname_ip
         share: /minio
   - name: minio-nas
     release: minio
@@ -31,7 +31,7 @@ instance_groups:
       credential:
         accesskey: minio
         secretkey: minio123
-      nas_data_dir: /var/vcap/nfs
+      data_dir: /var/vcap/nfs
       port: 9000
   networks:
   - name: default

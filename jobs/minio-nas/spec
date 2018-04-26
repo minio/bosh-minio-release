@@ -24,8 +24,11 @@ properties:
   credential.secretkey:
     description: "The secret key the server should accept"
     default: ~
-  nas_data_dir:
-    description: "The directory where the nas share is mounted."
+  data_dir:
+    description: "The directory on NAS mount point which needs to be exported as S3."
+  config_dir:
+    description: "The directory on NAS mount point which should be used as Minio's config directory."
+    default: ""
   region:
     description: "The region the server should claim to be part of.  Defaults to us-east-1."
     default: us-east-1

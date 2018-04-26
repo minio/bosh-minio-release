@@ -2,8 +2,14 @@
 
 RUN_DIR=/var/vcap/sys/run/minio-nas
 LOG_DIR=/var/vcap/sys/log/minio-nas
+DATA_DIR='<%= p("data_dir") %>)'
+CONFIG_DIR='<%= p("config_dir") %>)'
 PIDFILE=${RUN_DIR}/pid
 BINPATH=/var/vcap/packages/minio
+
+if [ "$CONFIG_DIR" = "" ]; then
+    CONFIG_DIR="$HOME/.minio"
+fi
 
 mkdir -p ${RUN_DIR} ${LOG_DIR}
 chown -R vcap:vcap $RUN_DIR $LOG_DIR
@@ -16,9 +22,9 @@ case $1 in
 
   start)
 
-    echo "Checking to see if nas_data_dir is mounted." >> ${LOG_DIR}/minio-server.stdout.log
+    echo "Checking to see if data_dir is mounted." >> ${LOG_DIR}/minio-server.stdout.log
     nas_check_attempts=0
-    while [ "$(stat --format='%d%D' /)" = "$(stat --format='%d%D' <%= p("nas_data_dir") %>)" ]; do
+    while [ "$(stat --format='%d%D' /)" = "$(stat --format='%d%D' $DATA_DIR)" ]; do
       sleep 1
       nas_check_attempts=$((nas_check_attempts+1))
       echo "Failed to find NAS mount $nas_check_attempts times." >> ${LOG_DIR}/minio-server.stderr.log
@@ -30,7 +36,7 @@ case $1 in
     echo "NAS share mounted! Starting Minio." >> ${LOG_DIR}/minio-server.stdout.log
 
     echo $$ > $PIDFILE
-    exec ${BINPATH}/minio gateway nas <%= p("nas_data_dir") %> \
+    exec ${BINPATH}/minio gateway -C $CONFIG_DIR --address ':<%= p("port") %>' nas $DATA_DIR \
          >> ${LOG_DIR}/minio-server.stdout.log \
          2>> ${LOG_DIR}/minio-server.stderr.log
     ;;
