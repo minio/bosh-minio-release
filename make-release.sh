@@ -90,7 +90,7 @@ then
     exit $?
 fi
 
-git add .final_builds/packages/minio/index.yml config/blobs.yml releases/minio/index.yml releases/minio/minio-$version.yml
+git add .
 if [ $? -ne 0 ]
 then
     echo "git add failed with status $?"
