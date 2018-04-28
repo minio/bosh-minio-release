@@ -1,0 +1,31 @@
+name: minio
+version: 2018-04-27T23-33-52Z
+commit_hash: 43241be
+uncommitted_changes: true
+jobs:
+- name: minio-azure
+  version: 0327a3cc28813b137a2fc8f055c7f98c2b3358ba92157be84127a237ee123950
+  fingerprint: 0327a3cc28813b137a2fc8f055c7f98c2b3358ba92157be84127a237ee123950
+  sha1: sha256:0d9b9b686cb7f429682f6538cccbd3e53995fdc9912883d3f7d7259457bfa4b7
+- name: minio-gcs
+  version: 956ee6059fed1373d61ada8dd50abc9e95c662ddc4c9cdcf7d81986c363d2b5b
+  fingerprint: 956ee6059fed1373d61ada8dd50abc9e95c662ddc4c9cdcf7d81986c363d2b5b
+  sha1: sha256:71f7c5f298b7069981688cb0b81e3b19eb35ff578a393f09194db586e1506517
+- name: minio-nas
+  version: cc572c2d233dbffb399dd9e0d0a0c5a9a46230fb6eec7667261840a151930e14
+  fingerprint: cc572c2d233dbffb399dd9e0d0a0c5a9a46230fb6eec7667261840a151930e14
+  sha1: sha256:a1b47a055014e8ab8dae82726d28714ba8c9f03102a9e7fe796cdbe8f720dd12
+- name: minio-server
+  version: 244981c5fb2b4ba98ae4281f21d1b4b8daba98f336feb64bf4db6206a125fdf6
+  fingerprint: 244981c5fb2b4ba98ae4281f21d1b4b8daba98f336feb64bf4db6206a125fdf6
+  sha1: sha256:ce6af87023be412e5b21b2321a2e29935627f3cefc4434e6e8bc7a4617403cfc
+packages:
+- name: minio
+  version: c817b7a784473b9384e8ecceec5404d26196d27b29ad1d0ccee1ce733a4f436a
+  fingerprint: c817b7a784473b9384e8ecceec5404d26196d27b29ad1d0ccee1ce733a4f436a
+  sha1: sha256:c3fb424c45bb65382d276d9d971ffa1bf30c3c7d4128a5d5ee01e43af99f1fe2
+  dependencies: []
+license:
+  version: ffa6a8d5154bcbf5fd82ee01f6840905d982f3222267dcff45223d6ef8388f4c
+  fingerprint: ffa6a8d5154bcbf5fd82ee01f6840905d982f3222267dcff45223d6ef8388f4c
+  sha1: sha256:fd8dad5c3da6c4cc7c2250aec9a4ce5ef3d54156863781ea1914e8553a454a7d
