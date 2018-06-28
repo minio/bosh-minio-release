@@ -14,7 +14,10 @@ bosh upload-release https://bosh.io/d/github.com/minio/minio-boshrelease
 ### Standalone Minio deployment
 
 ``` shell
-bosh deploy -d minio manifest/manifest-fs-example.yml
+$ bosh deploy -d minio manifests/manifest-fs-example.yml \
+    -v minio_deployment_name=minio \
+    -v minio_accesskey=admin \
+    -v minio_secretkey=CHANGEME!
 ```
 
 ### Distributed Minio deployment
@@ -22,12 +25,19 @@ bosh deploy -d minio manifest/manifest-fs-example.yml
 For deploying a distributed version, set the number of desired instances in the manifest file.
 
 ``` shell
-bosh deploy -d minio manifest/manifest-dist-example.yml
+$ bosh deploy -d minio manifests/manifest-dist-example.yml \
+    -v minio_deployment_name=minio \
+    -v minio_accesskey=admin \
+    -v minio_secretkey=CHANGEME!
 ```
+
 ### NAS Minio deployment
 
 For deploying a minio backed by a NAS mounted directory.  In this example using NFS with the nfs_mounter job from the capi release.
 
 ``` shell
-bosh deploy -d minio manifest/manifest-nas-example.yml
+$ bosh deploy -d minio manifests/manifest-nas-example.yml \
+    -v minio_deployment_name=minio \
+    -v minio_accesskey=admin \
+    -v minio_secretkey=CHANGEME!
 ```
