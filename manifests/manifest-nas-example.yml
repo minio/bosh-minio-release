@@ -1,5 +1,5 @@
 ---
-name: minio
+name: ((minio_deployment_name))
 
 releases:
 - name: minio
@@ -11,6 +11,12 @@ stemcells:
 - alias: default
   os: ubuntu-trusty
   version: latest
+
+variables:
+- name: minio_accesskey
+  type: password
+- name: minio_secretkey
+  type: password
 
 instance_groups:
 - name: minio
@@ -29,8 +35,8 @@ instance_groups:
     - name: minio-nas
     properties:
       credential:
-        accesskey: minio
-        secretkey: minio123
+        accesskey: ((minio_accesskey))
+        secretkey: ((minio_secretkey))
       data_dir: /var/vcap/nfs
       port: 9000
   networks:

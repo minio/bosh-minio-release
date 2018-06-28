@@ -19,12 +19,12 @@ variables:
 instance_groups:
 - name: minio
   azs: [z1]
-  instances: 1
+  instances: 4
   jobs:
   - name: minio-server
     release: minio
-    templates:
-    - name: minio-server
+    provides:
+      minio-server: {as: minio-link}
     properties:
       credential:
         accesskey: ((minio_accesskey))
