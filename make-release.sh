@@ -82,6 +82,14 @@ then
     exit $?
 fi
 
+echo "Executing: bosh2 upload-blobs"
+bosh2 upload-blobs
+if [ $? -ne 0 ]
+then
+    echo "bosh2 upload-blobs failed with status $?"
+    exit $?
+fi
+
 echo "Executing: bosh2 create-release --sha2 --version=$version --final --force"
 bosh2 create-release --sha2 --version=$version --final --force
 if [ $? -ne 0 ]
