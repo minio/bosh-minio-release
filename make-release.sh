@@ -67,13 +67,6 @@ then
     exit 1
 fi
 
-git checkout -b $version
-if [ $? -ne 0 ]
-then
-    echo "git checkout -b $version failed with status $?"
-    exit $?
-fi
-
 echo "Executing: bosh2 add-blob --sha2 /tmp/minio minio"
 bosh2 add-blob --sha2 /tmp/minio minio
 if [ $? -ne 0 ]
@@ -113,17 +106,10 @@ then
 fi
 
 echo "Executing: git push"
-git push origin $version
+git push --quiet
 if [ $? -ne 0 ]
 then
     echo "git push failed with status $?"
     exit $?
 fi
 
-# https://hub.github.com/ needs to be installed for the following command to work.
-hub pull-request -m "Minio BOSH release $version"
-if [ $? -ne 0 ]
-then
-    echo "git pull-request failed with status $?"
-    exit $?
-fi
