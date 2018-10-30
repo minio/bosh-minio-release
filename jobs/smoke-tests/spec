@@ -3,6 +3,7 @@ name: smoke-tests
 
 templates:
   run.erb: bin/run
+  ca.crt.erb: config/certs/CAs/ca.crt
 
 consumes:
 - name: minio

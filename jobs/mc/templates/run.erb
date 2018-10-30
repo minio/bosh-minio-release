@@ -15,13 +15,24 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 #
 
+<%
+  require "shellwords"
+
+
+  def esc(x)
+      Shellwords.shellescape(x)
+  end
+%>
+
 export PATH=$PATH:/var/vcap/packages/mc
 
 ACCESS_KEY="<%= link('minio').p('credential.accesskey') %>"
 SECRET_KEY="<%= link('minio').p('credential.secretkey') %>"
 PORT="<%= link('minio').p('port') %>"
 HOST="<%= link('minio').instances[0].address %>"
-export MC_HOST_myminio=http://$ACCESS_KEY:$SECRET_KEY@$HOST:$PORT
+PROTOCOL=<%= esc(link('minio').p('server_cert', nil) ? 'https' : 'http') %>
+
+export MC_HOST_myminio=$PROTOCOL://$ACCESS_KEY:$SECRET_KEY@$HOST:$PORT
 
 bash <<EOF
 <%= p("script") %>

@@ -23,6 +23,8 @@ provides:
   - port
   - credential.accesskey
   - credential.secretkey
+  - server_cert
+  - ca_cert
 - name: http_backend
   type: http-router
   properties:
