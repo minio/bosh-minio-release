@@ -7,14 +7,15 @@
   end
 %>
 
-MC=/var/vcap/packages/mc/mc
+MC="/var/vcap/packages/mc/mc --config-folder /var/vcap/jobs/smoke-tests/config"
 
 ACCESS_KEY=<%= esc(link('minio').p('credential.accesskey')) %>
 SECRET_KEY=<%= esc(link('minio').p('credential.secretkey')) %>
 PORT=<%= esc(link('minio').p('port')) %>
 HOST=<%= esc(link('minio').instances[0].address) %>
+PROTOCOL=<%= esc(link('minio').p('server_cert', nil) ? 'https' : 'http') %>
 
-export MC_HOSTS_myminio=http://$ACCESS_KEY:$SECRET_KEY@$HOST:$PORT
+export MC_HOSTS_myminio=$PROTOCOL://$ACCESS_KEY:$SECRET_KEY@$HOST:$PORT
 
 # MakeBucket
 $MC mb myminio/test
