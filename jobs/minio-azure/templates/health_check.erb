@@ -13,7 +13,14 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+<%
+  require "shellwords"
 
-http_response=$(curl -s -k -o /dev/null -I -w "%{http_code}" http://localhost:<%= p("port") %>/minio/health/live)
+  def esc(x)
+      Shellwords.shellescape(x)
+  end
+%>
+
+http_response=$(curl -s -k -o /dev/null -I -w "%{http_code}" http://localhost:<%= esc(p("port")) %>/minio/health/live)
 
 [ "$http_response" = "200" ]

@@ -1,11 +1,19 @@
 #!/bin/bash
+<%
+  require "shellwords"
+
+  def esc(x)
+      Shellwords.shellescape(x)
+  end
+%>
 
 export PATH=$PATH:/var/vcap/packages/mc
 
-ACCESS_KEY="<%= link('minio').p('credential.accesskey') %>"
-SECRET_KEY="<%= link('minio').p('credential.secretkey') %>"
-PORT="<%= link('minio').p('port') %>"
-HOST="<%= link('minio').instances[0].address %>"
+ACCESS_KEY=<%= esc(link('minio').p('credential.accesskey')) %>
+SECRET_KEY=<%= esc(link('minio').p('credential.secretkey')) %>
+PORT=<%= esc(link('minio').p('port')) %>
+HOST=<%= esc(link('minio').instances[0].address) %>
+
 export MC_HOSTS_myminio=http://$ACCESS_KEY:$SECRET_KEY@$HOST:$PORT
 
 bash <<EOF
