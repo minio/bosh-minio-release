@@ -1,10 +1,11 @@
+<% require 'json' -%>
 {
 	"version": "14",
 	"credential": {
-		"accessKey": "<%= p("credential.accesskey") %>",
-		"secretKey": "<%= p("credential.secretkey") %>"
+		"accessKey": <%= p('credential.accesskey').to_json %>,
+		"secretKey": <%= p('credential.secretkey').to_json %>
 	},
-	"region": "<%= p("region") %>",
+	"region": <%= p('region').to_json %>,
 	"browser": "on",
 	"logger": {
 		"console": {

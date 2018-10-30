@@ -1,4 +1,11 @@
 #!/bin/bash
+<%
+  require "shellwords"
+
+  def esc(x)
+      Shellwords.shellescape(x)
+  end
+%>
 
 RUN_DIR=/var/vcap/sys/run/minio-azure
 LOG_DIR=/var/vcap/sys/log/minio-azure
@@ -10,15 +17,15 @@ BINPATH=/var/vcap/packages/minio
 mkdir -p ${RUN_DIR} ${LOG_DIR} ${CONFIG_DIR} ${STORE_DIR}
 chown -R vcap:vcap $RUN_DIR $LOG_DIR $CONFIG_DIR ${STORE_DIR}
 
-export MINIO_ACCESS_KEY="<%= p("credential.accesskey") %>"
-export MINIO_SECRET_KEY="<%= p("credential.secretkey") %>"
-export MINIO_PCF_TILE_VERSION=<%= p("pcf_tile_version") %>
+export MINIO_ACCESS_KEY=<%= esc(p("credential.accesskey")) %>
+export MINIO_SECRET_KEY=<%= esc(p("credential.secretkey")) %>
+export MINIO_PCF_TILE_VERSION=<%= esc(p("pcf_tile_version")) %>
 
 case $1 in
 
   start)
     echo $$ > $PIDFILE
-    exec ${BINPATH}/minio gateway --address ':<%= p("port") %>' azure \
+    exec ${BINPATH}/minio gateway --address :<%= esc(p("port")) %> azure \
          >> ${LOG_DIR}/minio-server.stdout.log \
          2>> ${LOG_DIR}/minio-server.stderr.log
     ;;
