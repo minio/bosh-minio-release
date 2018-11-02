@@ -29,9 +29,6 @@ properties:
   config_dir:
     description: "The directory on NAS mount point which should be used as Minio's config directory."
     default: ""
-  region:
-    description: "The region the server should claim to be part of.  Defaults to us-east-1."
-    default: us-east-1
   port:
     description: "The port on which the Minio server should bind"
     default: 9000

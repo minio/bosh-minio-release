@@ -30,9 +30,6 @@ properties:
   credential.googleprojectid:
     description: Google Project ID
     default: ""
-  region:
-    description: "The region the server should claim to be part of.  Defaults to us-east-1."
-    default: us-east-1
   port:
     description: "The port on which the Minio server should bind"
     default: 9000

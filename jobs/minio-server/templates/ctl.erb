@@ -12,10 +12,6 @@ BINPATH=/var/vcap/packages/minio
 mkdir -p ${RUN_DIR} ${LOG_DIR} ${CONFIG_DIR} ${DATA_DIR}
 chown -R vcap:vcap $RUN_DIR $LOG_DIR $CONFIG_DIR ${DATA_DIR}
 
-if [ ! -f ${CONFIG_DIR}/config.json ]; then
-    cp /var/vcap/jobs/minio-server/config/config.json ${CONFIG_DIR}/config.json
-fi
-
 <% protocol = nil %>
 <% if_p('server_cert') do %>
   <% protocol = 'https' %>
@@ -40,6 +36,8 @@ end.else do
   nodes = link('minio-server').instances.map { |instance| "#{protocol}://#{instance.address}${DATA_DIR}/" }
 end %>
 
+export MINIO_ACCESS_KEY="<%= p("credential.accesskey") %>"
+export MINIO_SECRET_KEY="<%= p("credential.secretkey") %>"
 export MINIO_PCF_TILE_VERSION=<%= p("pcf_tile_version") %>
 
 case $1 in

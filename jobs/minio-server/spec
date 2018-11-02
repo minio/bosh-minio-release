@@ -3,7 +3,6 @@ name: minio-server
 templates:
   ctl.erb: bin/ctl
   health_check.erb: bin/health_check
-  config.json.erb: config/config.json
   dns/aliases.json.erb: dns/aliases.json
   public.crt.erb: config/public.crt
   private.key.erb: config/private.key
@@ -31,9 +30,6 @@ properties:
   credential.secretkey:
     description: "The secret key the server should accept"
     default: ~
-  region:
-    description: "The region the server should claim to be part of.  Defaults to us-east-1."
-    default: us-east-1
   port:
     description: "The port on which the Minio server should bind"
     default: 9000
