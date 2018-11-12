@@ -1,5 +1,16 @@
+<% protocol = nil %>
+<% if_p('server_cert') do %>
+  <% protocol = 'https' %>
+<% end.else do %>
+  <% protocol = 'http' %>
+<% end %>
+
 check process minio-server
   with pidfile /var/vcap/sys/run/minio-server/pid
   start program "/var/vcap/jobs/minio-server/bin/ctl start"
   stop program "/var/vcap/jobs/minio-server/bin/ctl stop"
   group vcap
+  if failed host localhost port <%= p("port") %> protocol <%= "#{protocol}" %>
+      and request '/minio/health/live'
+      with timeout 60 seconds for 5 cycles
+  then restart
