@@ -10,7 +10,7 @@ PIDFILE=${RUN_DIR}/pid
 BINPATH=/var/vcap/packages/minio
 
 mkdir -p ${RUN_DIR} ${LOG_DIR} ${CONFIG_DIR} ${DATA_DIR}
-chown -R vcap:vcap $RUN_DIR $LOG_DIR $CONFIG_DIR ${DATA_DIR}
+chown -R vcap:vcap $RUN_DIR $LOG_DIR
 
 <% protocol = nil %>
 <% if_p('server_cert') do %>
@@ -54,7 +54,7 @@ case $1 in
     ;;
 
   stop)
-    kill $(<$PIDFILE)
+    killall -9 minio
     rm -f $PIDFILE
 
     ;;
