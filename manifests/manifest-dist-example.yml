@@ -19,7 +19,7 @@ variables:
 instance_groups:
 - name: minio
   azs: [z1]
-  instances: 4
+  instances: ((minio_instances))
   jobs:
   - name: minio-server
     release: minio
@@ -33,7 +33,7 @@ instance_groups:
   networks:
   - name: default
   vm_type: default
-  persistent_disk_type: 2048
+  persistent_disk_type: ((minio_persistent_disk_type))
   stemcell: default
 
 - name: tests
@@ -51,7 +51,6 @@ instance_groups:
   networks:
   - name: default
   vm_type: default
-  persistent_disk_type: 2048
   stemcell: default
 
 - name: bucket-seeding # To create default buckets after manifest-deploy
@@ -76,7 +75,6 @@ instance_groups:
   networks:
   - name: default
   vm_type: default
-  persistent_disk_type: 2048
   stemcell: default
 
 update:
