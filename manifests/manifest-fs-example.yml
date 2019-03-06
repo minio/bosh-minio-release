@@ -25,6 +25,8 @@ instance_groups:
     release: minio
     templates:
     - name: minio-server
+    provides:
+      minio-server: {as: minio-link}
     properties:
       credential:
         accesskey: ((minio_accesskey))
