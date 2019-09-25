@@ -27,7 +27,7 @@ instance_groups:
     release: capi
     properties:
       nfs_server:
-        address: nfs_server_hostname_ip
+        address: ((minio_nfs_server))
         share: /minio
   - name: minio-nas
     release: minio
