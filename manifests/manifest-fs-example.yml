@@ -54,6 +54,8 @@ instance_groups:
   - name: default
   vm_type: default
   persistent_disk_type: 2048
+  env:
+    persistent_disk_fs: xfs
   stemcell: default
 
 - name: bucket-seeding # To create default buckets after manifest-deploy
