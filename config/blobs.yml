@@ -1,7 +1,7 @@
 mc:
-  size: 12746144
-  object_id: ecaabdf3-3481-43ce-5fb4-ed5b835fcf9e
-  sha: sha256:547e127cb58e2f8e3c159e8f8d26189573827fd89005383e0f6b4079c2b1b5e9
+  size: 16797696
+  object_id: 97bd468d-7e36-4d2f-5b36-0fe3be8e4144
+  sha: sha256:6e5af30404c2e1c9294899dc10094cfdf7e8d8f0a55e49707462a67749ae7828
 minio:
   size: 46575616
   object_id: aaecc8c4-48e3-4c4b-45d6-164858c184c9
