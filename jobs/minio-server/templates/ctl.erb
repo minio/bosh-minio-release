@@ -54,6 +54,9 @@ end %>
 export MINIO_ACCESS_KEY="<%= p("credential.accesskey") %>"
 export MINIO_SECRET_KEY="<%= p("credential.secretkey") %>"
 export MINIO_PCF_TILE_VERSION=<%= p("pcf_tile_version") %>
+<% if_p('external_dns_alias') do %>
+export MINIO_DOMAIN=<%= p("external_dns_alias") %>
+<% end %>
 
 case $1 in
 
