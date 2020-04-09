@@ -54,6 +54,10 @@ end %>
 export MINIO_ACCESS_KEY="<%= p("credential.accesskey") %>"
 export MINIO_SECRET_KEY="<%= p("credential.secretkey") %>"
 export MINIO_PCF_TILE_VERSION=<%= p("pcf_tile_version") %>
+<% if_p('prometheus_auth_type') do %>
+export MINIO_PROMETHEUS_AUTH_TYPE=<%= p("prometheus_auth_type") %>
+<% end %>
+
 
 case $1 in
 
