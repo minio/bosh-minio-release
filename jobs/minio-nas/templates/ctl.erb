@@ -14,11 +14,18 @@
 # You should have received a copy of the GNU Affero General Public License, version 3,
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 #
+<%
+  require "shellwords"
+
+  def esc(x)
+      Shellwords.shellescape(x)
+  end
+%>
 
 RUN_DIR=/var/vcap/sys/run/minio-nas
 LOG_DIR=/var/vcap/sys/log/minio-nas
-DATA_DIR='<%= p("data_dir") %>'
-CONFIG_DIR='<%= p("config_dir") %>'
+DATA_DIR=<%= esc(p("data_dir")) %>
+CONFIG_DIR=<%= esc(p("config_dir")) %>
 PIDFILE=${RUN_DIR}/pid
 BINPATH=/var/vcap/packages/minio
 
@@ -29,9 +36,9 @@ fi
 mkdir -p ${RUN_DIR} ${LOG_DIR}
 chown -R vcap:vcap $RUN_DIR $LOG_DIR
 
-export MINIO_ACCESS_KEY="<%= p("credential.accesskey") %>"
-export MINIO_SECRET_KEY="<%= p("credential.secretkey") %>"
-export MINIO_PCF_TILE_VERSION=<%= p("pcf_tile_version") %>
+export MINIO_ACCESS_KEY=<%= esc(p("credential.accesskey")) %>
+export MINIO_SECRET_KEY=<%= esc(p("credential.secretkey")) %>
+export MINIO_PCF_TILE_VERSION=<%= esc(p("pcf_tile_version")) %>
 
 case $1 in
 
@@ -51,7 +58,7 @@ case $1 in
     echo "NAS share mounted! Starting Minio." >> ${LOG_DIR}/minio-server.stdout.log
 
     echo $$ > $PIDFILE
-    exec ${BINPATH}/minio gateway -C $CONFIG_DIR --address ':<%= p("port") %>' nas $DATA_DIR \
+    exec ${BINPATH}/minio gateway -C $CONFIG_DIR --address :<%= esc(p("port")) %> nas $DATA_DIR \
          >> ${LOG_DIR}/minio-server.stdout.log \
          2>> ${LOG_DIR}/minio-server.stderr.log
     ;;

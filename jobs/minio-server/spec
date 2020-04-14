@@ -22,6 +22,8 @@ provides:
   - port
   - credential.accesskey
   - credential.secretkey
+  - server_cert
+  - ca_cert
 - name: http_backend
   type: http-router
   properties:
@@ -35,23 +37,23 @@ properties:
     description: "The secret key the server should accept"
     default: ~
   port:
-    description: "The port on which the Minio server should bind"
+    description: "The port on which the MinIO server should bind"
     default: 9000
   pcf_tile_version:
     description: "PCF Tile version"
     default: ""
   server_cert:
     description: |
-      PEM-encoded certificate for the Minio server. When set, nodes will communicate with each other over HTTPS rather than HTTP.
+      PEM-encoded certificate for the MinIO server. When set, nodes will communicate with each other over HTTPS rather than HTTP.
       See 'dns_alias' property below for hostname information.
     default: ~
   server_key:
     description: |
-      PEM-encoded private key for the Minio server.
+      PEM-encoded private key for the MinIO server.
     default: ~
   ca_cert:
     description: |
-      PEM-encoded certificate used to sign the certificates of the other Minio nodes.
+      PEM-encoded certificate used to sign the certificates of the other MinIO nodes.
       Required if `server_cert` is specified and `server_cert` was signed by a third-party CA.
     default: ~
   dns_alias:

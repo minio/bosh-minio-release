@@ -14,59 +14,44 @@
 # You should have received a copy of the GNU Affero General Public License, version 3,
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 #
+<%
+  require "shellwords"
 
-MC=/var/vcap/packages/mc/mc
+  def esc(x)
+      Shellwords.shellescape(x)
+  end
+%>
 
-ACCESS_KEY="<%= link('minio').p('credential.accesskey') %>"
-SECRET_KEY="<%= link('minio').p('credential.secretkey') %>"
-PORT="<%= link('minio').p('port') %>"
-HOST="<%= link('minio').instances[0].address %>"
-export MC_HOST_myminio=http://$ACCESS_KEY:$SECRET_KEY@$HOST:$PORT
+MC="/var/vcap/packages/mc/mc --config-folder /var/vcap/jobs/smoke-tests/config"
+
+ACCESS_KEY=<%= esc(link('minio').p('credential.accesskey')) %>
+SECRET_KEY=<%= esc(link('minio').p('credential.secretkey') %>
+PORT=<%= esc(link('minio').p('port')) %>
+HOST=<%= esc(link('minio').instances[0].address) %>
+PROTOCOL=<%= esc(link('minio').p('server_cert', nil) ? 'https' : 'http') %>
+
+export MC_HOST_myminio=$PROTOCOL://$ACCESS_KEY:$SECRET_KEY@$HOST:$PORT
+
+set -e
 
 # MakeBucket
 $MC mb myminio/test
-if [ $? -ne 0 ]
-then
-    exit $?
-fi
 
 # PUT Object
 $MC cp /etc/passwd myminio/test
-if [ $? -ne 0 ]
-then
-    exit $?
-fi
 
 # GET Object
 uploadedFile=`$MC cat myminio/test/passwd`
-if [ $? -ne 0 ]
-then
-    exit $?
-fi
 
 localFile=`cat /etc/passwd`
-if [ $? -ne 0 ]
-then
-    exit $?
-fi
 
-if [ "$uploadedFile" != "$localFile" ]
-then
-    exit 1
-fi
+# Assert both contents are identical
+[ "$uploadedFile" == "$localFile" ]
 
 # Remove Object
 $MC rm --force myminio/test/passwd
-if [ $? -ne 0 ]
-then
-    exit $?
-fi
 
 # Remove Bucket
 $MC rm --force myminio/test
-if [ $? -ne 0 ]
-then
-    exit $?
-fi
 
 exit 0
