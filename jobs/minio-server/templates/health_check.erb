@@ -15,6 +15,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>
 #
 
-http_response=$(curl -s -k -o /dev/null -I -w "%{http_code}" http://localhost:<%= p("port") %>/minio/health/live)
+<% protocol = nil %>
+<% if_p('server_cert') do %>
+  <% protocol = 'https' %>
+<% end.else do %>
+  <% protocol = 'http' %>
+<% end %>
+
+http_response=$(curl -s -k -o /dev/null -I -w "%{http_code}" <%= protocol %>://localhost:<%= p("port") %>/minio/health/live)
 
 [ "$http_response" = "200" ]
