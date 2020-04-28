@@ -40,6 +40,12 @@ properties:
   port:
     description: "The port on which the Minio server should bind"
     default: 9000
+  envs:
+    description: "environmental variable settings for MinIO process"
+    default: ""
+    example: |
+      export MINIO_STORAGE_CLASS_STANDARD=EC:2
+      export MINIO_BROWSER=off
   pcf_tile_version:
     description: "PCF Tile version"
     default: ""
