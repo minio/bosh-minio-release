@@ -26,6 +26,9 @@ instance_groups:
       port: ((minio.port))
       minio_endpoint: ((minio.azure.endpoint))
       ca_cert: ((minio.azure.ca_cert))
+      tls:
+        private_key: ((minio.azure.cert.key))
+        public_crt: ((minio.azure.cert.certificate))
   networks:
   - name: ((network_name))
   vm_type: ((minio.vm_type))
