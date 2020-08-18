@@ -53,6 +53,14 @@ end %>
 
 <%= p("envs", "") -%>
 
+<% if_p('licensekey') do %>
+/var/vcap/packages/minio/minio-license-verify <%= p("licensekey") %>
+if [ $? == 1 ];
+then
+    exit 1
+fi
+<% end %>
+
 export MINIO_ACCESS_KEY="<%= p("credential.accesskey") %>"
 export MINIO_SECRET_KEY="<%= p("credential.secretkey") %>"
 export MINIO_PCF_TILE_VERSION=<%= p("pcf_tile_version") %>

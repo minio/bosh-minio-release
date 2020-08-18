@@ -31,6 +31,8 @@ provides:
   - port
 
 properties:
+  licensekey:
+    descrption: "License Key"
   credential.accesskey:
     description: "The access key the server should accept"
     default: ~

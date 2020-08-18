@@ -1,4 +1,4 @@
 set -e
 
-cp -a minio ${BOSH_INSTALL_TARGET}
-chmod +x ${BOSH_INSTALL_TARGET}/minio
+cp -a minio minio-license-verify ${BOSH_INSTALL_TARGET}
+chmod +x ${BOSH_INSTALL_TARGET}/minio ${BOSH_INSTALL_TARGET}/minio-license-verify
