@@ -27,6 +27,8 @@ properties:
   port:
     description: "The port on which the Minio server should bind"
     default: 9000
+  minio_endpoint:
+    description: "The endoint if using custom endpoints or azurestack, eg https.storageaccount.blob.my.domain"
   pcf_tile_version:
     description: "PCF Tile version"
     default: ""
