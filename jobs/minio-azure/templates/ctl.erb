@@ -29,6 +29,11 @@ export MINIO_ACCESS_KEY="<%= p("credential.accesskey") %>"
 export MINIO_SECRET_KEY="<%= p("credential.secretkey") %>"
 export MINIO_PCF_TILE_VERSION=<%= p("pcf_tile_version") %>
 
+<% if_p('ca_cert') do %>
+  mkdir -p  ${CONFIG_DIR}/certs/CAs/
+  cp /var/vcap/jobs/minio-azure/config/ca.crt ${CONFIG_DIR}/certs/CAs
+<% end %>
+
 case $1 in
 
   start)
