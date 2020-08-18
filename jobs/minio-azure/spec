@@ -3,7 +3,7 @@ name: minio-azure
 templates:
   ctl.erb: bin/ctl
   health_check.erb: bin/health_check
-  ca.crt.erb: config/ca.crt
+  ca.crt.erb: config/certs/CAs/ca.crt
 
 packages:
 - minio
