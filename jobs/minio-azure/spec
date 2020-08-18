@@ -3,6 +3,7 @@ name: minio-azure
 templates:
   ctl.erb: bin/ctl
   health_check.erb: bin/health_check
+  ca.crt.erb: config/ca.crt
 
 packages:
 - minio
@@ -29,6 +30,12 @@ properties:
     default: 9000
   minio_endpoint:
     description: "The endoint if using custom endpoints or azurestack, eg https.storageaccount.blob.my.domain"
+    default: ""
+  ca_cert:
+    description: |
+      PEM-encoded certificate used to sign the certificates of the custom endpoint
+      Required for AzureStack ASDK or a third-party CA.
+    default: ~      
   pcf_tile_version:
     description: "PCF Tile version"
     default: ""
