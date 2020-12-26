@@ -3,9 +3,9 @@ mc:
   object_id: 271719c0-02e0-4084-669a-fa3a50e8fab4
   sha: sha256:81993b7cec9cbf2809d83c612bde833eb19dae16e128e3466227eee70f3293b7
 minio:
-  size: 50487296
-  object_id: d8a322d4-68ec-48d1-59fc-4452db234bf2
-  sha: sha256:b8fd8e065ac91af7e634fd9967a115d3efa0fd1e74963adca6cf269001475af3
+  size: 50479104
+  object_id: 154259a6-7a0f-4989-5607-84d8a2e338ac
+  sha: sha256:0f734346e312086f02843cca955eff1d443119895fc4028b0d35ac177b6ee013
 minio-license-verify:
   size: 3763255
   object_id: e9bb35c9-cfd0-4d05-6c52-c54e5d5b463f
