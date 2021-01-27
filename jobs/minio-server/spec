@@ -2,6 +2,7 @@
 name: minio-server
 templates:
   ctl.erb: bin/ctl
+  pre-start.erb: bin/pre-start
   health_check.erb: bin/health_check
   health_check.erb: bin/dns/healthy
   dns/aliases.json.erb: dns/aliases.json

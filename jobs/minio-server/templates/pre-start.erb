@@ -1,0 +1,30 @@
+#!/bin/bash
+#
+# Copyright (c) 2019, MinIO, Inc.
+#
+# This code is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License, version 3,
+# as published by the Free Software Foundation.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License, version 3,
+# along with this program.  If not, see <http://www.gnu.org/licenses/>
+#
+
+cat > /etc/cron.hourly/minio-license-check<<EOF
+#!/bin/bash
+
+<% if_p('licensekey') do %>
+/var/vcap/packages/minio/minio-license-verify <%= p("licensekey") %>
+if [ $? == 1 ];
+then
+killall -9 minio
+fi
+<% end %>
+EOF
+
+chmod +x /etc/cron.hourly/minio-license-check
