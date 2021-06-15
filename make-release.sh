@@ -90,6 +90,14 @@ then
     exit $?
 fi
 
+echo "Executing: bosh2 add-blob --sha2 /tmp/minio-license-verify minio-license-verify"
+bosh2 add-blob --sha2 /tmp/minio-license-verify minio-license-verify
+if [ $? -ne 0 ]
+then
+    echo "bosh2 add-blob failed with status $?"
+    exit $?
+fi
+
 
 echo "Executing: bosh2 upload-blobs"
 bosh2 upload-blobs
