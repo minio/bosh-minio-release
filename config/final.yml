@@ -2,8 +2,6 @@
 blobstore:
   provider: s3
   options:
-    bucket_name: minio-bosh-blobs
-    host: pivotal.minio.io
-    port: 9000
+    bucket_name: smarsh-bosh-releases
 
 final_name: minio
