@@ -41,12 +41,12 @@ then
 fi
 
 echo "Downloading latest minio to /tmp/minio"
-wget --quiet -O /tmp/minio https://dl.minio.io/server/minio/release/linux-amd64/minio
-if [ $? -ne 0 ]
-then
-    echo wget exited with status $?
-    exit $?
-fi
+#wget --quiet -O /tmp/minio https://dl.minio.io/server/minio/release/linux-amd64/minio
+#if [ $? -ne 0 ]
+#then
+#    echo wget exited with status $?
+#    exit $?
+#fi
 
 shaGot=`shasum -a 256 /tmp/minio | awk -F' ' '{print $1}'`
 curlOutput=`curl -s https://dl.minio.io/server/minio/release/linux-amd64/minio.sha256sum`
