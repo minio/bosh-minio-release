@@ -48,7 +48,7 @@ then
     exit $?
 fi
 
-shaGot=`sha256sum /tmp/minio | awk -F' ' '{print $1}'`
+shaGot=`shasum -a 256 /tmp/minio | awk -F' ' '{print $1}'`
 curlOutput=`curl -s https://dl.minio.io/server/minio/release/linux-amd64/minio.sha256sum`
 
 shaExpected=`echo $curlOutput | awk -F' ' '{print $1}'`
