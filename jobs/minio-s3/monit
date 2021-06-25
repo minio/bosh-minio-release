@@ -1,0 +1,5 @@
+check process minio-s3
+  with pidfile /var/vcap/sys/run/minio-s3/pid
+  start program "/var/vcap/jobs/minio-s3/bin/ctl start"
+  stop program "/var/vcap/jobs/minio-s3/bin/ctl stop"
+  group vcap
