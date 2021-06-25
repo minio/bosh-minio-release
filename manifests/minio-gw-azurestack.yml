@@ -1,0 +1,41 @@
+---
+name: ((minio.deployment_name))
+releases:
+- name: minio
+  version: latest
+
+stemcells:
+- alias: default
+  os: ubuntu-xenial
+  version: ((minio.stemcell-release))
+
+
+instance_groups:
+- name: minio
+  azs: ((azs))
+  instances: 1
+  jobs:
+  - name: minio-azure
+    release: minio
+    templates:
+    - name: minio-azure
+    properties:
+      credential:
+        accesskey: ((minio.azure.accesskey))
+        secretkey: ((minio.azure.secretkey))
+      port: ((minio.port))
+      minio_endpoint: ((minio.azure.endpoint))
+      ca_cert: ((minio.azure.ca_cert))
+      tls:
+        private_key: ((minio.azure.cert.key))
+        public_crt: ((minio.azure.cert.certificate))
+  networks:
+  - name: ((network_name))
+  vm_type: ((minio.vm_type))
+  stemcell: default
+
+update:
+  canaries: 2
+  canary_watch_time: 1000-30000
+  update_watch_time: 1000-30000
+  max_in_flight: 2 

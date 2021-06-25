@@ -3,6 +3,9 @@ name: minio-azure
 templates:
   ctl.erb: bin/ctl
   health_check.erb: bin/health_check
+  ca.crt.erb: config/certs/CAs/ca.crt
+  public.crt.erb: config/certs/public.crt
+  private.key.erb: config/certs/private.key
 
 packages:
 - minio
@@ -27,6 +30,20 @@ properties:
   port:
     description: "The port on which the Minio server should bind"
     default: 9000
+  minio_endpoint:
+    description: "The endoint if using custom endpoints or azurestack, eg https.storageaccount.blob.my.domain"
+    default: ""
+  tls.private_key:
+    description: "Private key for TLS when using ssl 443"
+    default: ~
+  tls.public_crt:
+    description: "Public Cert in PEM Format for TLS when using ssl 443"
+    default: ~       
+  ca_cert:
+    description: |
+      PEM-encoded certificate used to sign the certificates of the custom endpoint
+      Required for AzureStack ASDK or a third-party CA.
+    default: ~      
   pcf_tile_version:
     description: "PCF Tile version"
     default: ""

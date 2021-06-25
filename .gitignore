@@ -14,3 +14,5 @@ blobs
 *~
 *#
 #*
+*.tgz
+make-dev-release.sh
