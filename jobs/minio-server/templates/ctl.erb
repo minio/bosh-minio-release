@@ -44,12 +44,16 @@ rm -f ${CONFIG_DIR}/certs/private.key
 rm -f ${CONFIG_DIR}/certs/CAs/ca.crt
 <% end %>
 
-<% nodes = nil %>
-<% if_p('dns_alias') do |dns_alias|
-  nodes = link('minio-server').instances.map { |instance| "#{protocol}://#{instance.id}.#{dns_alias}${DATA_DIR}/" }
-end.else do
-  nodes = link('minio-server').instances.map { |instance| "#{protocol}://#{instance.address}${DATA_DIR}/" }
-end %>
+<% nodes = [] %>
+<%
+if_link('minio_server')  do |minioserver|
+   if_p('dns_alias') do |dns_alias|
+    nodes = minioserver.instances.map { |instance| "#{protocol}://#{instance.id}.#{dns_alias}${DATA_DIR}/" }
+  end.else do
+    nodes = minioserver.instances.map { |instance| "#{protocol}://#{instance.address}${DATA_DIR}/" }
+  end
+end
+%>
 
 <%= p("envs", "") -%>
 
@@ -72,7 +76,7 @@ case $1 in
 
     exec ${BINPATH}/minio server -C $CONFIG_DIR \
          --address ':<%= p("port") %>' \
-         <% if link("minio-server").instances.length > 1 %><%= nodes.map{ |n| "\"#{n}\"" }.join(' ') %><% else %>${DATA_DIR}/<% end %> \
+         <% if nodes.length > 1 %><%= nodes.map{ |n| "\"#{n}\"" }.join(' ') %><% else %>${DATA_DIR}/<% end %> \
          >> ${LOG_DIR}/minio-server.stdout.log \
          2>> ${LOG_DIR}/minio-server.stderr.log
 
